@@ -1,5 +1,4 @@
 import csv
-import math
 from typing import List, Tuple
 
 
@@ -46,17 +45,16 @@ class Server:
             
         Returns:
             List of rows for the requested page
-            Empty list if arguments are out of range
         """
-        # Verify arguments are positive integers
+        # Validate input parameters
         assert isinstance(page, int) and page > 0, "page must be a positive integer"
         assert isinstance(page_size, int) and page_size > 0, "page_size must be a positive integer"
-        
-        # Get the pagination range
+
+        # Calculate start and end indices
         start, end = index_range(page, page_size)
         dataset = self.dataset()
         
-        # Return empty list if range is invalid
+        # Check if start index is out of range
         if start >= len(dataset):
             return []
         
