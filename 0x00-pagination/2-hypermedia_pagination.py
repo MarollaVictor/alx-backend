@@ -1,7 +1,5 @@
-#!/usr/bin/env python3
 import csv
-import math
-from typing import List, Dict, Tuple
+from typing import List, Tuple
 
 
 def index_range(page: int, page_size: int) -> Tuple[int, int]:
@@ -48,40 +46,16 @@ class Server:
         Returns:
             List of rows for the requested page
         """
+        # Validate input parameters
         assert isinstance(page, int) and page > 0, "page must be a positive integer"
         assert isinstance(page_size, int) and page_size > 0, "page_size must be a positive integer"
 
+        # Calculate start and end indices
         start, end = index_range(page, page_size)
         dataset = self.dataset()
         
+        # Check if start index is out of range
         if start >= len(dataset):
             return []
         
         return dataset[start:end]
-
-    def get_hyper(self, page: int = 1, page_size: int = 10) -> Dict:
-        """
-        Get hypermedia pagination details for the dataset.
-        
-        Args:
-            page: Page number (1-indexed, default 1)
-            page_size: Number of items per page (default 10)
-            
-        Returns:
-            Dictionary with pagination details
-        """
-        data = self.get_page(page, page_size)
-        total_items = len(self.dataset())
-        total_pages = math.ceil(total_items / page_size)
-        
-        next_page = page + 1 if page < total_pages else None
-        prev_page = page - 1 if page > 1 else None
-        
-        return {
-            'page_size': len(data),
-            'page': page,
-            'data': data,
-            'next_page': next_page,
-            'prev_page': prev_page,
-            'total_pages': total_pages
-        }
