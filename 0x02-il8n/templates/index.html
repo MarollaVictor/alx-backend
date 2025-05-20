@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ _('Hello world!') }}</title>
+</head>
+<body>
+    <h1>{{ _('Hello world!') }}</h1>
+    {% if g.user %}
+        <p>{{ _('You are logged_in_as', username=g.user.name) }}</p>
+    {% else %}
+        <p>{{ _('You are not_logged_in') }}</p>
+    {% endif %}
+    <p>{{ _('current_time_is', current_time=current_time) }}</p>
+</body>
+</html>
